@@ -16,15 +16,15 @@ jobs:
       - name: Checkout this repository
         uses: actions/checkout@v4
 
-      - name: Clone the Raspberry Pi Pico SDK
-        run: |
-          git clone --branch master --depth 1 https://github.com/raspberrypi/pico-sdk.git
-          cd pico-sdk && git submodule update --init
-
       - name: Install dependencies
         run: |
           sudo apt-get update && \
           sudo apt-get install -y cmake gcc-arm-none-eabi build-essential
+
+      - name: Clone the Raspberry Pi Pico SDK
+        run: |
+          git clone --branch master --depth 1 https://github.com/raspberrypi/pico-sdk.git
+          cd pico-sdk && git submodule update --init
 
       - name: Create build directory
         # We'll use this as our working directory for all subsequent commands
