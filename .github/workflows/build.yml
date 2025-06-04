@@ -7,6 +7,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc)
   BUILD_TYPE: Release
+  PICO_SDK_PATH: ${{github.workspace}}/pico-sdk
 
 jobs:
   build:
@@ -36,7 +37,7 @@ jobs:
         working-directory: ${{github.workspace}}/build
         shell: bash
         # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
-        run: cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DPICO_SDK_PATH=${{github.workspace}}/pico-sdk
+        run: cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DPICO_SDK_PATH=$PICO_SDK_PATH
 
       - name: Build the project
         working-directory: ${{github.workspace}}/build
