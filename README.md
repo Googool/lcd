@@ -1,4 +1,4 @@
-[![Build](https://img.shields.io/github/actions/workflow/status/Googool/pico_lcd/build.yml?branch=main&label=build&style=flat)](https://github.com/Googool/pico_lcd/actions/workflows/build.yml)
+[![Build](https://img.shields.io/github/actions/workflow/status/Googool/lcd/build.yml?branch=main&label=build&style=flat)](https://github.com/Googool/lcd/actions/workflows/build.yml)
 
 ## Documentation
 
