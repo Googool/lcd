@@ -7,7 +7,6 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc)
   BUILD_TYPE: Release
-  PICO_SDK_PATH: ${{github.workspace}}/pico-sdk
 
 jobs:
   build:
@@ -23,24 +22,23 @@ jobs:
           sudo apt-get install -y cmake gcc-arm-none-eabi build-essential
 
       - name: Clone the Raspberry Pi Pico SDK
-        # Maybe cache this for better build times?
         run: |
           git clone --branch master --depth 1 https://github.com/raspberrypi/pico-sdk.git
           cd pico-sdk && git submodule update --init
 
-      - name: Create build directory
+      - name: Create build environment
         # Some projects don't allow in-source building, so create a separate build directory
         # We'll use this as our working directory for all subsequent commands
         run: cmake -E make_directory ${{github.workspace}}/build
 
       - name: Configure CMake
         working-directory: ${{github.workspace}}/build
-        shell: bash
         # The CMake binaries on the Github Actions machines are (as of this writing) 3.12
-        run: cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DPICO_SDK_PATH=$PICO_SDK_PATH
+        run: |
+          export PICO_SDK_PATH=${{github.workspace}}/pico-sdk
+          cmake .. -DCMAKE_BUILD_TYPE=$BUILD_TYPE
 
       - name: Build the project
         working-directory: ${{github.workspace}}/build
-        shell: bash
         # Execute the build. You can specify a specific target with "--target <NAME>"
-        run: cmake --build . --config $BUILD_TYPE --parallel $(nproc)
+        run: cmake --build . --parallel $(nproc)
